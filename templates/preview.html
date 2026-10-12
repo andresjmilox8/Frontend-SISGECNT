@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Dashboard Epidemiológico | SIGECNT</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232C3E50'/%3E%3Cpath d='M16 8v16M8 16h16' stroke='%23ECF0F1' stroke-width='4'/%3E%3C/svg%3E">
+    <!-- Ajusta la ruta relativa hacia tu archivo dashboard.css -->
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <!-- Ajusta la ruta hacia Chart.js local -->
+    <script src="../static/vendor/chartjs/chart.umd.js" defer></script>
+    <script src="../static/js/dashboard.js" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+    <header class="site-header">
+        <div class="institutional-bar">
+            <div class="page-container institutional-bar__content">
+                <strong class="institutional-bar__name">UNEXCA</strong>
+                <p>Sistema automatizado para centralizar el manejo de datos y vincular al flujo de trabajo del Consultorio Núñez Tenorio</p>
+            </div>
+        </div>
+        <div class="page-container identity-bar">
+            <div class="identity">
+                <svg class="identity__symbol" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true" focusable="false">
+                    <rect x="1" y="1" width="42" height="42" rx="12" stroke="currentColor" stroke-opacity=".2"/>
+                    <path d="M22 12v20M12 22h20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <div>
+                    <p class="identity__name">SIGECNT</p>
+                    <p class="identity__description">Sistema de Gestión del Centro Núñez Tenorio</p>
+                </div>
+            </div>
+            <div class="operator" aria-label="Operador autenticado">
+                <svg class="operator__symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M5 20v-1a7 7 0 0 1 14 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <div>
+                    <p class="operator__name">Dr. Tony García</p>
+                    <p class="operator__role">Estadístico / Epidemiólogo <span>(Trabajador Asistencial)</span></p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="contenido-principal" class="page-container main-content" tabindex="-1">
+        <div class="dashboard-header">
+            <div>
+                <h1>Dashboard Epidemiológico</h1>
+                <p class="page-description">Vigilancia asistida, auditoría de partes médicos e inyección de datos para el Consultorio Núñez Tenorio.</p>
+            </div>
+            <div class="week-indicator">
+                <span class="week-indicator__label">Semana Epidemiológica Activa</span>
+                <strong class="week-indicator__value">Semana 28</strong>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Curva de Picos Semanales -->
+            <section class="dashboard-card card-chart" aria-labelledby="title-picos">
+                <div class="card-header">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M3 12h3l3-9 4 18 3-13 3 4h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h2 id="title-picos" class="card-title">Curva de Picos Epidemiológicos</h2>
+                </div>
+                <p class="card-subtitle">Morbilidades atendidas diariamente durante la semana actual.</p>
+                <div class="chart-wrapper">
+                    <canvas id="chart-picos" aria-label="Gráfico de líneas que muestra la evolución diaria de pacientes atendidos."></canvas>
+                </div>
+            </section>
+
+            <!-- Top Patologías -->
+            <section class="dashboard-card card-chart" aria-labelledby="title-top">
+                <div class="card-header">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h2 id="title-top" class="card-title">Top 5 Patologías Recurrentes</h2>
+                </div>
+                <p class="card-subtitle">Distribución porcentual de los diagnósticos más frecuentes de la semana.</p>
+                <div class="chart-wrapper">
+                    <canvas id="chart-patologias" aria-label="Gráfico de barras horizontales mostrando las 5 patologías más recurrentes."></canvas>
+                </div>
+            </section>
+
+            <!-- Recepción Telegram -->
+            <section class="dashboard-card card-telegram" aria-labelledby="title-ingreso">
+                <div class="card-header">
+                    <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h2 id="title-ingreso" class="card-title">Recepción de Mensajes (Telegram)</h2>
+                </div>
+                <p class="card-subtitle">Copie y pegue aquí el parte enviado por el Médico Asistencial para procesar automáticamente.</p>
+                
+                <form id="form-telegram" class="telegram-form" novalidate>
+                    <div class="form-group">
+                        <label for="texto-telegram" class="sr-only">Mensaje plano de morbilidades</label>
+                        <textarea id="texto-telegram" class="telegram-textarea" name="texto_telegram" placeholder="Pegue el mensaje aquí. Ejemplo:&#10;CI:12345678|NOM:Juan Perez|EDAD:25|DX:Rinofaringitis Aguda" required aria-describedby="telegram-help"></textarea>
+                        <div id="telegram-help" class="field-help">El validador inspeccionará el formato en tiempo real antes de procesar el lote.</div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="btn-procesar" class="btn btn-primary" disabled>Procesar Parte Clínico</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Tabla de Pendientes -->
+            <section class="dashboard-card card-table" aria-labelledby="title-tabla">
+                <div class="card-header card-header--spaced">
+                    <div>
+                        <h2 id="title-tabla" class="card-title">Bandeja de Morbilidades Pendientes</h2>
+                        <p class="card-subtitle">Audite los datos antropométricos y complete los datos de filiación antes de la inyección.</p>
+                    </div>
+                    <button type="button" id="btn-aprobar-lote" class="btn btn-primary btn-lg" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v13a2 2 0 0 1-2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Aprobar Lote e Inyectar en Excel (.xlsx)
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <p id="tabla-estado" class="table-status" aria-live="polite"></p>
+                    <table class="table-interactiva">
+                        <thead>
+                            <tr>
+                                <th>Cédula</th>
+                                <th>Nombre y Apellido</th>
+                                <th class="th-short">Edad</th>
+                                <th>Diagnóstico (Patología)</th>
+                                <th class="th-short">Indíg.</th>
+                                <th class="th-short">Talla (m)</th>
+                                <th class="th-short">Peso (kg)</th>
+                                <th>Dirección de Habitación</th>
+                                <th class="th-action">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-pendientes-body">
+                            <tr class="fila-pendiente fila-pendiente--incomplete" data-id="101">
+                                <td contenteditable="true" data-campo="ci">30507057</td>
+                                <td contenteditable="true" data-campo="nom">Andrés Ramos</td>
+                                <td contenteditable="true" data-campo="edad">20</td>
+                                <td contenteditable="true" data-campo="dx">Dengue Clásico Sin Signos de Alarma</td>
+                                <td contenteditable="true" data-campo="indigena">No</td>
+                                <td contenteditable="true" data-campo="talla" class="cell-warning" title="Talla incompleta"></td>
+                                <td contenteditable="true" data-campo="peso" class="cell-warning" title="Peso incompleto"></td>
+                                <td contenteditable="true" data-campo="direccion">Caricuao UD3 Edificio 12 Apt 4</td>
+                                <td>
+                                    <button type="button" class="btn-icon btn-descartar" title="Descartar registro">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr class="fila-pendiente" data-id="102">
+                                <td contenteditable="true" data-campo="ci">12781967</td>
+                                <td contenteditable="true" data-campo="nom">Magemyl Egaña</td>
+                                <td contenteditable="true" data-campo="edad">58</td>
+                                <td contenteditable="true" data-campo="dx">Hipertensión Arterial Esencial</td>
+                                <td contenteditable="true" data-campo="indigena">No</td>
+                                <td contenteditable="true" data-campo="talla">1.68</td>
+                                <td contenteditable="true" data-campo="peso">64.50</td>
+                                <td contenteditable="true" data-campo="direccion">El Paraíso Avenida Páez</td>
+                                <td>
+                                    <button type="button" class="btn-icon btn-descartar" title="Descartar registro">🗑️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="modal-aprobacion" class="modal-aprobacion" role="dialog" aria-modal="true" aria-labelledby="modal-aprobacion-titulo" aria-describedby="modal-aprobacion-descripcion" aria-hidden="true" hidden>
+        <div class="modal-aprobacion__backdrop" data-modal-cerrar></div>
+        <section class="modal-aprobacion__panel" role="document">
+            <div class="modal-aprobacion__icon" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" focusable="false">
+                    <path d="M12 3v12M7 10l5 5 5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div>
+                <h2 id="modal-aprobacion-titulo">Confirmar inyección institucional</h2>
+                <p id="modal-aprobacion-descripcion">Se inyectarán <strong id="total-registros-exportables">0</strong> registros íntegros en la plantilla institucional de Excel.</p>
+            </div>
+            <p id="modal-aprobacion-estado" class="modal-aprobacion__estado" aria-live="polite">Revise el total antes de confirmar.</p>
+            <div class="modal-aprobacion__acciones">
+                <button type="button" id="btn-cancelar-inyeccion" class="btn btn-secondary">Cancelar</button>
+                <button type="button" id="btn-confirmar-inyeccion" class="btn btn-primary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                        <path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Confirmar inyección
+                </button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

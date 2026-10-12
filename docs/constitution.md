@@ -1,0 +1,10 @@
+# Constitución SIGECNT
+Principios innegociables. Toda spec, plan, tarea e implementación debe cumplirlos estrictamente.
+
+1. **Soberanía y Despliegue 100% On-Premises**: El sistema opera exclusivamente en Localhost sobre hardware local de la estación. Queda estrictamente prohibida la dependencia de hosting externo, servicios en la nube (SaaS/BaaS) o llamadas externas HTTP/S hacia la API de Telegram durante la ejecución.
+2. **La Spec Manda**: Ningún archivo ni línea de código se implementa si no está formalmente detallado en la spec activa. Si surge una discrepancia o caso límite no contemplado, el agente se detiene y consulta al usuario.
+3. **Desacoplamiento Estructural Innegociable**: Las credenciales y sesiones de operadores (`usuarios` / `CustomUser`) se mantienen en aislamiento relacional absoluto respecto a los datos clínicos de pacientes (`morbilidad_detalle` y `morbilidad`), sin claves foráneas cruzadas.
+4. **Eficiencia Operativa (Regla de los 2 Clics)**: Toda acción crítica de validación e inyección en hojas de cálculo institucionales debe resolverse en un máximo estricto de dos acciones del operador (Clic 1: Selección/Aprobación, Clic 2: Confirmación).
+5. **Cero Dependencias de Compilación en Frontend**: La interfaz de usuario es servida por Django Templates y JavaScript Vanilla puro, sin frameworks pesados (React/Vue/Angular) ni pasos de compilación (npm/vite). Los recursos (Chart.js, hojas de estilo e iconos SVG) residen 100% offline en el directorio local `/static/vendor/`.
+6. **Manejo Seguro y Defensivo de Persistencia**: Todo ingreso desde mensajería se valida localmente mediante expresiones regulares antes de tocar la base de datos. Si una plantilla Excel (.xlsx) se encuentra bloqueada por el sistema operativo, el software debe capturar el error y generar un archivo temporal con sufijo timestamp, impidiendo la pérdida de registros.
+7. **Idioma y Nomenclatura**: Código fuente, identificadores, endpoints y bases de datos en español/inglés estandarizado según Django; interfaz gráfica de usuario, documentación técnica institucional y mensajes del sistema redactados 100% en español formal.

@@ -1,0 +1,65 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>{% block title %}SIGECNT | Centro Núñez Tenorio{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232C3E50'/%3E%3Cpath d='M16 8v16M8 16h16' stroke='%23ECF0F1' stroke-width='4'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    {% block extra_css %}{% endblock %}
+    <script src="{% static 'vendor/chartjs/chart.umd.js' %}" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
+
+    <header class="site-header">
+        <div class="institutional-bar">
+            <div class="page-container institutional-bar__content">
+                <strong class="institutional-bar__name">UNEXCA</strong>
+                <p>Sistema automatizado para centralizar el manejo de datos y vincular al flujo de trabajo del Consultorio Núñez Tenorio</p>
+            </div>
+        </div>
+        <div class="page-container identity-bar">
+            <div class="identity">
+                <svg class="identity__symbol" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true" focusable="false">
+                    <rect x="1" y="1" width="42" height="42" rx="12" stroke="currentColor" stroke-opacity=".2"/>
+                    <path d="M22 12v20M12 22h20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <div>
+                    <p class="identity__name">SIGECNT</p>
+                    <p class="identity__description">Sistema de Gestión del Centro Núñez Tenorio</p>
+                </div>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="operator" aria-label="Operador autenticado">
+                <svg class="operator__symbol" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M5 20v-1a7 7 0 0 1 14 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <div>
+                    <p class="operator__name">{% firstof user.get_full_name user.get_username %}</p>
+                    <p class="operator__role">Estadístico / Epidemiólogo <span>(Trabajador Asistencial)</span></p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <main id="contenido-principal" class="page-container main-content" tabindex="-1">
+        <div class="notifications" aria-live="polite" aria-atomic="false">
+            {% for message in messages %}
+            <p class="notification{% if message.tags %} {{ message.tags }}{% endif %}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% block content %}
+        <h1>Gestión de morbilidades</h1>
+        <p class="page-description">Consultorio Núñez Tenorio</p>
+        {% endblock %}
+    </main>
+
+    {# Los scripts hijos deben usar defer para ejecutarse después de Chart.js. #}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
